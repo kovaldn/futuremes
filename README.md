@@ -12,7 +12,7 @@
 1. git clone https://github.com/kovaldn/futuremes futuremes
 2. cd !$
 3. bower i
-4. npm link gulp browser-synk
+4. npm link gulp browser-sync
 5. gulp 
 
 > PHP
