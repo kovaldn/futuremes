@@ -8,17 +8,53 @@
 	<meta name="author" content="Kovalchuk Dima">
 	<title>App</title>
 	<!-- CSS -->
-	<link rel="stylesheet" href="bower/normalize.css/normalize.css">
+	<!-- <link rel="stylesheet" href="bower/normalize.css/normalize.css"> -->
+	<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/foundicons/3.0.0/foundation-icons.css" >
+	<link rel="stylesheet" href="bower/foundation/css/foundation.css">
+	<link rel="stylesheet" href="bower/foundation-datepicker/css/foundation-datepicker.css">
 	<link rel="stylesheet" href="css/main.css">
 	<!-- modernizr -->
-	<script src="bower/modernizr/modernizr.js"></script>
+	<!-- <script src="bower/modernizr/modernizr.js"></script> -->
 </head>
 <body>
 	<!--[if lt IE 7]>
 	<p class="browsehappy">Ваш браузер <strong>устарел</strong>. Пожалуйста<a href="http://browsehappy.com/">обновите</a> его.</p>
 	<![endif]-->
 	<!-- JS -->
+	<div class="container">
+		<div class="row">
+			<h1>Отправляем письма в будущее</h1>
+			<div class="panel columns">
+				<form action="ajax.php" class="form" id="future-form">	
+
+					<!-- Сообщения с сервера -->
+					<div class="alert-box">
+			      <span class="text">Вы и не должны это видеть!</span>
+			      <a href="#" class="close">⊗</a>
+			    </div>
+
+					<div class="row">
+						<div class="medium-6 columns">
+							<label for="mail">Email</label>
+							<input type="text" name="mail" placeholder="user@email.ru">
+						</div>
+						<div class="medium-6 columns">
+							<label for="date">Когда нужно отправить сообщение</label>
+							<input type="text" class="fdatepicker" name="date" placeholder="01/01/2017">
+						</div>
+					</div>
+
+					<label for="mes">Содержание сообщения</label>
+					<textarea name="mes" cols="30" rows="10" placeholder="душевное послание в будущее"></textarea>
+					<button class="button">Отправить</button>	
+					// TODO: добавить капчу
+				</form>
+			</div>
+		</div>
+	</div>
 	<script src="bower/jquery/dist/jquery.js"></script>
+	<script src="bower/foundation/js/foundation.js"></script>
+	<script src="bower/foundation-datepicker/js/foundation-datepicker.js"></script>
 	<script src="js/main.js"></script>
 </body>
 </html>
