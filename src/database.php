@@ -6,10 +6,12 @@
 
         public function __construct($hostname, $username, $password, $database)
         {
-            $this->mysqli = new mysqli($hostname, $username, $password, $database);
+            $this->mysqli = new mysqli($hostname, $username, $password);
 
             if ($this->mysqli->connect_error) {
                 trigger_error('Error: Could not make a database link (' . $this->mysqli->connect_errno . ') ' . $this->mysqli->connect_error);
+            } else if (isset($database) && !empty($database)) {
+                $this->mysqli->select_db($database);
             }
 
             $this->mysqli->query("SET NAMES 'utf8'");
@@ -18,11 +20,24 @@
             $this->mysqli->query("SET SQL_MODE = ''");
         }
 
+        public function create_db($db)
+        {
+            $result = true;
+            if ($this->mysqli->query('CREATE DATABASE ' . $db)) {
+                if (!$this->mysqli->select_db($db)) {
+                    $result = $this->mysqli->error;
+                }
+            } else {
+                $result = $this->mysqli->error;
+            }
+            return $result;
+        }
+
         public function query($sql)
         {
             $result = $this->mysqli->query($sql);
 
-            if ($this->mysqli->errno === 0) {
+            if ($result && $this->mysqli->errno === 0) {
                 if (isset($result->num_rows) && $result->num_rows > 0) {
                     $i = 0;
 
@@ -47,7 +62,7 @@
                 }
 
             } else {
-                return $this->mysqli->errno;
+                return $this->mysqli->error;
             }
         }
 

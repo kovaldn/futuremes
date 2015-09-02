@@ -41,17 +41,18 @@
             $data['status'] = 'OK';
             $data['text'] = 'Вы молодец, не забыли заполнить все поля';
 
-            $db->query("INSERT INTO sheduller SET email='" . $_POST['mail'] . "', message='" . $_POST['mes'] . "', dt='" . implode('.', $dt) . "'");
+//            $db->query("INSERT INTO scheduler SET email='" . $_POST['mail'] . "', message='" . $db->escape($_POST['mes']) . "', dt='" . $db->escape(implode('.', $dt)) . "'");
+            $db->query("INSERT INTO scheduler SET email='" . $_POST['mail'] . "', message='" . $db->escape($_POST['mes']) . "', dt='" . $db->escape(date('Y.m.d', strtotime($_POST['date']))) . "'");
         }
 
         header("Content-Type: application/json");
         echo json_encode($data);
     } else if (!$_SERVER['REQUEST_METHOD']) {
-        $messsages = $db->query("SELECT * FROM sheduller WHERE status=0 AND dt='" . date('Y.m.d') . "'");
+        $messsages = $db->query("SELECT * FROM scheduler WHERE status=0 AND dt='" . $db->escape(date('Y.m.d')) . "'");
 
         foreach ($messsages->rows as $message) {
             if (writeLetter(EMAIL, $message->email, SUBJECT, $message->message)) {
-                $db->query("UPDATE sheduller SET status=1 WHERE id=" . $message->id);
+                $db->query("UPDATE scheduler SET status=1 WHERE id=" . $message->id);
             }
         }
     }
